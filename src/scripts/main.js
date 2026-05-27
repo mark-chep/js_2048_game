@@ -45,11 +45,14 @@ function updateUI() {
 
   loseMessage.classList.add('hidden');
   winMessage.classList.add('hidden');
+  startMessage.classList.add('hidden');
 
   if (info === 'lose') {
     loseMessage.classList.remove('hidden');
   } else if (info === 'win') {
     winMessage.classList.remove('hidden');
+  } else if (info === 'idle') {
+    startMessage.classList.remove('hidden');
   }
 
   updateButton();
@@ -66,10 +69,23 @@ startButton.addEventListener('click', () => {
   }
 
   updateUI();
+  startButton.blur();
 });
 
 document.addEventListener('keydown', (evt) => {
   const info = game.getStatus();
+
+  if (evt.key === 'Enter') {
+    if (info === 'idle') {
+      startMessage.classList.add('hidden');
+      game.start();
+    } else {
+      game.restart();
+    }
+    updateUI();
+
+    return;
+  }
 
   if (info !== 'playing' && info !== 'win') {
     return;

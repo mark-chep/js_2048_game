@@ -221,7 +221,7 @@ class Game {
   }
 
   getState() {
-    return this.board;
+    return JSON.parse(JSON.stringify(this.board));
   }
 
   getStatus() {
